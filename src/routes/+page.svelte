@@ -21,16 +21,14 @@
 	let phoneScroller: HTMLDivElement;
 </script>
 
-<h1
-	class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl"
->
+<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
 	Cheat smarter with <!-- -->
 	<span class="relative whitespace-nowrap text-[#3290EE]"
 		><span class="relative">IA-powered</span></span
 	>
 	<!-- -->CheatGPT
 </h1>
-<p class="mx-auto mt-12 max-w-xl text-lg opacity-75 leading-7">
+<p class="mx-auto mt-12 max-w-xl text-lg opacity-80 leading-7">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
 </p>
@@ -45,13 +43,38 @@
 		class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
 		href="/chat">Start Cheating Now</a
 	> -->
-	<!-- <form action="">
-		<button
-			class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
-			type="submit">Subscribe</button
-		>
-	</form> -->
 </div>
+
+<form
+	action="https://gmail.us21.list-manage.com/subscribe/post"
+	method="post"
+	target="_blank"
+	novalidate
+	class="flex flex-col items-center mt-20"
+>
+	<h2 class="mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl">
+		Sign up for our newsletter
+	</h2>
+	<p class="mx-auto mb-8 max-w-2xl font-light opacity-80 md:mb-12 sm:text-xl">
+		Subscribe to our newsletter to stay updated on when CheatGPT will be available.
+	</p>
+
+	<div class="form-control w-full max-w-sm">
+		<div class="input-group">
+			<input
+				type="email"
+				class="input input-bordered w-full"
+				name="EMAIL"
+				value=""
+				placeholder="Enter your email"
+			/>
+			<button type="submit" class="btn">Subscribe</button>
+		</div>
+	</div>
+
+	<input type="hidden" name="u" value="e6bd76c03e76b4817ba70d806" />
+	<input type="hidden" name="id" value="4745c6ccc4" />
+</form>
 
 <div class="my-20">
 	<div class="mockup-phone">
@@ -79,12 +102,10 @@
 <section id="testimonials" aria-label="What our customers are saying" class="py-10">
 	<div class="mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto md:text-center">
-			<h1
-				class="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl"
-			>
+			<h1 class="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl">
 				Designed for millions of students.
 			</h1>
-			<p class="mx-auto mt-6 max-w-xl text-lg opacity-75 leading-7 mt-8">
+			<p class="mx-auto mt-6 max-w-xl text-lg opacity-80 leading-7 mt-8">
 				See what our users are saying about the product on twitter <a
 					target="_blank"
 					rel="noreferrer"
