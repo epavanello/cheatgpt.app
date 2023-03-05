@@ -22,7 +22,7 @@
 </script>
 
 <h1
-	class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl"
+	class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl"
 >
 	Cheat smarter with <!-- -->
 	<span class="relative whitespace-nowrap text-[#3290EE]"
@@ -30,7 +30,7 @@
 	>
 	<!-- -->CheatGPT
 </h1>
-<p class="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7">
+<p class="mx-auto mt-12 max-w-xl text-lg opacity-75 leading-7">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
 </p>
@@ -59,7 +59,7 @@
 		<div class="display">
 			<div class="artboard artboard-demo phone-1">
 				<div
-					class="h-full w-full pt-8 px-4 overflow-hidden scroll-smooth"
+					class="h-full w-full pt-8 pb-4 px-4 overflow-hidden scroll-smooth"
 					bind:this={phoneScroller}
 				>
 					{#each renderedMessages as message}
@@ -80,11 +80,11 @@
 	<div class="mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto md:text-center">
 			<h1
-				class="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl"
+				class="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl"
 			>
 				Designed for millions of students.
 			</h1>
-			<p class="mx-auto mt-6 max-w-xl text-lg text-slate-700 leading-7 mt-8">
+			<p class="mx-auto mt-6 max-w-xl text-lg opacity-75 leading-7 mt-8">
 				See what our users are saying about the product on twitter <a
 					target="_blank"
 					rel="noreferrer"
