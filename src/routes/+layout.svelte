@@ -9,7 +9,7 @@
 <div class="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
 	<header class="flex justify-between items-center w-full mt-5 border-b-2 pb-7 sm:px-4 px-2">
 		<a class="flex space-x-2 !no-underline" href="/">
-			<h1 class="sm:text-5xl text-3xl font-bold ml-2 tracking-tight">CheatGPT 🎓</h1></a
+			<h2 class="sm:text-5xl text-3xl font-bold ml-2 tracking-tight">CheatGPT 🎓</h2></a
 		>
 		<a
 			class="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-blue-600 text-white px-5 py-2 text-sm shadow-md hover:bg-blue-500 bg-blue-600 font-medium transition"

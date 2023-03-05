@@ -28,7 +28,7 @@
 	>
 	<!-- -->CheatGPT
 </h1>
-<p class="mx-auto mt-12 max-w-xl text-lg opacity-80 leading-7">
+<p class="mx-auto max-w-2xl font-light opacity-80 sm:text-xl mt-8">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
 </p>
@@ -102,10 +102,10 @@
 <section id="testimonials" aria-label="What our customers are saying" class="py-10">
 	<div class="mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto md:text-center">
-			<h1 class="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal sm:text-6xl">
+			<h2 class="mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl">
 				Designed for millions of students.
-			</h1>
-			<p class="mx-auto mt-6 max-w-xl text-lg opacity-80 leading-7 mt-8">
+			</h2>
+			<p class="mx-auto mb-8 max-w-2xl font-light opacity-80 md:mb-12 sm:text-xl">
 				See what our users are saying about the product on twitter <a
 					target="_blank"
 					rel="noreferrer"
