@@ -24,7 +24,7 @@
 <h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
 	Cheat smarter with <!-- -->
 	<span class="relative whitespace-nowrap text-[#3290EE]"
-		><span class="relative">IA-powered</span></span
+		><span class="relative">AI-powered</span></span
 	>
 	<!-- -->CheatGPT
 </h1>
