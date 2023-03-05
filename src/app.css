@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a[href]{
+ @apply font-semibold hover:underline;
+}
