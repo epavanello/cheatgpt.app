@@ -29,7 +29,7 @@
 	>
 	<!-- -->CheatGPT
 </h1>
-<p class="mx-auto max-w-2xl font-light opacity-80 sm:text-xl mt-8">
+<p class="mx-auto max-w-2xl font-light opacity-85 sm:text-xl mt-8">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
 </p>
@@ -56,7 +56,7 @@
 	<h2 class="mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl">
 		Sign up for our newsletter
 	</h2>
-	<p class="mx-auto mb-8 max-w-2xl font-light opacity-80 md:mb-12 sm:text-xl">
+	<p class="mx-auto mb-8 max-w-2xl font-light opacity-85 md:mb-12 sm:text-xl">
 		Subscribe to our newsletter to stay updated on when CheatGPT will be available.
 	</p>
 
@@ -101,7 +101,7 @@
 			<h2 class="mb-4 text-3xl tracking-tight font-extrabold sm:text-4xl">
 				Designed for millions of students.
 			</h2>
-			<p class="mx-auto mb-8 max-w-2xl font-light opacity-80 md:mb-12 sm:text-xl">
+			<p class="mx-auto mb-8 max-w-2xl font-light opacity-85 md:mb-12 sm:text-xl">
 				See what our users are saying about the product on twitter <a
 					target="_blank"
 					rel="noreferrer"

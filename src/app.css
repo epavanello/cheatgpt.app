@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-a[href]{
- @apply font-semibold hover:underline;
+a[href] {
+	@apply font-semibold hover:underline;
+}
+
+html,
+body {
+	@apply h-full m-0 p-0;
 }
