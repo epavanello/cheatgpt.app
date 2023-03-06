@@ -1,7 +1,8 @@
 <script lang="ts">
+	import ChatBubble from '../../lib/components/ChatBubble.svelte';
+
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
-	import { messages, type Message } from '../lib/chat';
+	import { messages, type Message } from '$lib/chat';
 
 	let renderedMessages: Message[] = [];
 	const copyMessages = async () => {
@@ -86,12 +87,7 @@
 					bind:this={phoneScroller}
 				>
 					{#each renderedMessages as message}
-						<div
-							transition:fly={{ duration: 1000 }}
-							class={`chat ${message.side == 'left' ? 'chat-start' : 'chat-end'}`}
-						>
-							<div class="chat-bubble text-left">{message.message}</div>
-						</div>
+						<ChatBubble message={message.message} side={message.side} />
 					{/each}
 				</div>
 			</div>

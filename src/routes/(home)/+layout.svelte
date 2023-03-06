@@ -1,12 +1,12 @@
 <script>
-	import TwitterIcon from './TwitterIcon.svelte';
+	import GithubIcon from '$lib/components/GithubIcon.svelte';
+	import TwitterIcon from '$lib/components/TwitterIcon.svelte';
 
-	import GithubIcon from '../lib/components/GithubIcon.svelte';
 
-	import '../app.css';
+	import '../../app.css';
 </script>
 
-<div class="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
+<div class="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 flex-1">
 	<header class="flex justify-between items-center w-full mt-5 border-b-2 pb-7 sm:px-4 px-2">
 		<a class="flex space-x-2 !no-underline" href="/">
 			<h2 class="sm:text-5xl text-3xl font-bold ml-2 tracking-tight">CheatGPT 🎓</h2></a

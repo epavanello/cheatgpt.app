@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
 	<meta charset="utf-8" />
@@ -37,9 +37,9 @@
 	%sveltekit.head%
 </head>
 
-<body data-sveltekit-preload-data="hover">
-	<div style="display: contents" class="bg-slate-50 text-slate-900 dark:bg-[#17181C] dark:text-slate-50">
-		%sveltekit.body%</div>
+<body data-sveltekit-preload-data="hover"
+	class="bg-slate-50 text-slate-900 dark:bg-[#17181C] dark:text-slate-50 min-h-screen h-full relative flex flex-col">
+	%sveltekit.body%
 </body>
 
 </html>
