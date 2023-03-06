@@ -9,16 +9,6 @@
 	let message: string = '';
 
 	let localMessages: Message[] = [
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
 		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
 	];
 
