@@ -13,19 +13,20 @@
 
 	function send() {
 		localMessages.push({ message, side: 'left' });
+		localMessages.push({ message: "I'm under construction", side: 'right' });
 		localMessages = localMessages;
 		message = '';
 	}
 </script>
 
 <div class="flex-1 w-full flex flex-col items-center justify-center">
-	<main class="w-full max-w-4xl h-2/3 flex flex-col">
+	<main class="w-full max-w-4xl h-2/3 mobile:h-full mobile:w-full flex flex-col">
 		<section class="flex-1 w-full">
 			{#each localMessages as message}
 				<ChatBubble message={message.message} side={message.side} />
 			{/each}
 		</section>
-		<footer class="w-full flex flex-row gap-4 items-center">
+		<form class="w-full flex flex-row gap-2 items-center px-2 py-1" on:submit={send}>
 			<Input
 				type="textarea"
 				rows="1"
@@ -37,7 +38,7 @@
 			<Tooltip message="Get text from a photo">
 				<Button icon="photo_camera" disabled />
 			</Tooltip>
-			<Button endIcon="auto_fix_normal" on:click={send}>Send</Button>
-		</footer>
+			<Button endIcon="auto_fix_normal" type="submit">Send</Button>
+		</form>
 	</main>
 </div>
