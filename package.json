@@ -33,6 +33,10 @@
 	"type": "module",
 	"dependencies": {
 		"classnames": "^2.3.2",
-		"daisyui": "^2.51.3"
+		"cross-env": "^7.0.3",
+		"daisyui": "^2.51.3",
+		"install": "^0.13.0",
+		"npm": "^9.6.1",
+		"openai": "^3.2.1"
 	}
 }

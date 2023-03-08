@@ -40,10 +40,10 @@
 		target="_blank"
 		rel="noreferrer">Learn how it's built</a
 	>
-	<!-- <a
+	<a
 		class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
 		href="/chat">Start Cheating Now</a
-	> -->
+	>
 </div>
 
 <form

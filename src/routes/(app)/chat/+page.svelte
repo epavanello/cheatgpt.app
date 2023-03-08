@@ -12,9 +12,18 @@
 		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
 	];
 
-	function send() {
+	async function send() {
+		const response = (await (
+			await fetch('', {
+				body: JSON.stringify({ message }),
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				}
+			})
+		).json()) as { response: { role: 'assistant'; content: string } };
 		localMessages.push({ message, side: 'left' });
-		localMessages.push({ message: "I'm under construction", side: 'right' });
+		localMessages.push({ message: response.response.content, side: 'right' });
 		localMessages = localMessages;
 		message = '';
 		setTimeout(() => {
@@ -35,11 +44,20 @@
 		>
 			<Input
 				type="textarea"
+				id="chat-input"
 				rows="1"
 				block
 				containerClass="flex-1"
+				inputClass="resize-none overflow-hidden"
 				placeholder="Ask here..."
+				autocomplete="off"
 				bind:value={message}
+				on:input={(e) => {
+					if (e.currentTarget && e.currentTarget instanceof HTMLTextAreaElement) {
+						e.currentTarget.style.height = 'auto';
+						e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
+					}
+				}}
 			/>
 			<Tooltip message="Get text from a photo">
 				<Button icon="photo_camera" disabled />

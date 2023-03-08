@@ -41,6 +41,7 @@
 				{id}
 				{name}
 				class={cn('textarea textarea-bordered w-full', { 'max-w-xs': !block }, inputClass)}
+				on:input
 				{...$$restProps}
 			/>
 		{:else if type == 'select'}
@@ -49,6 +50,7 @@
 				{id}
 				{name}
 				class={cn('select select-bordered capitalize w-full', { 'max-w-xs': !block }, inputClass)}
+				on:input
 				{...$$restProps}
 			>
 				<option disabled selected />
@@ -63,6 +65,7 @@
 				{type}
 				{name}
 				on:input={handleInput}
+				on:input
 				class={cn(
 					'w-full',
 					{
