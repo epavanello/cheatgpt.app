@@ -37,6 +37,7 @@
 		"daisyui": "^2.51.3",
 		"install": "^0.13.0",
 		"npm": "^9.6.1",
-		"openai": "^3.2.1"
+		"openai": "^3.2.1",
+		"tesseract.js": "^4.0.2"
 	}
 }

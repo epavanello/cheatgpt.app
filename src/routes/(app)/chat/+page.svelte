@@ -5,6 +5,7 @@
 	import Input from '$lib/components/Input.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { onMount } from 'svelte';
+	import Tesseract from 'tesseract.js';
 
 	let message: string = '';
 
@@ -12,6 +13,26 @@
 		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
 	];
 
+	let convertingImage = false;
+
+	let textarea: HTMLTextAreaElement;
+	let file: HTMLInputElement;
+
+	function updateTextareaSize() {
+		if (textarea) {
+			textarea.style.height = 'auto';
+			textarea.style.height = textarea.scrollHeight + 'px';
+		}
+	}
+
+	$: {
+		message;
+		setTimeout(() => {
+			updateTextareaSize();
+		}, 0);
+	}
+
+	let tesseractWorker: Tesseract.Worker | null = null;
 	async function send() {
 		const response = (await (
 			await fetch('', {
@@ -30,6 +51,46 @@
 			document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
 		}, 0);
 	}
+
+	async function handleFile(
+		event: Event & {
+			currentTarget: EventTarget & HTMLInputElement;
+		}
+	) {
+		if (
+			tesseractWorker &&
+			event.currentTarget.files &&
+			event.currentTarget.parentNode &&
+			event.currentTarget.files.length == 1 &&
+			event.currentTarget.files[0]
+		) {
+			convertingImage = true;
+			try {
+				const file = event.currentTarget.files[0];
+				event.currentTarget.value = '';
+				const ret = await tesseractWorker.recognize(
+					file,
+					{ rotateAuto: true },
+					{ imageColor: true, imageGrey: true, imageBinary: true }
+				);
+				console.log(ret.data);
+				message = ret.data.text;
+			} catch (error) {
+			} finally {
+				convertingImage = false;
+			}
+		}
+	}
+
+	onMount(async () => {
+		const worker = await Tesseract.createWorker({});
+		await worker.loadLanguage('eng');
+		await worker.initialize('eng');
+
+		await worker.initialize();
+
+		tesseractWorker = worker;
+	});
 </script>
 
 <div class="flex-1 w-full flex flex-col items-center justify-center">
@@ -51,16 +112,24 @@
 				inputClass="resize-none overflow-hidden"
 				placeholder="Ask here..."
 				autocomplete="off"
+				bind:input={textarea}
 				bind:value={message}
-				on:input={(e) => {
-					if (e.currentTarget && e.currentTarget instanceof HTMLTextAreaElement) {
-						e.currentTarget.style.height = 'auto';
-						e.currentTarget.style.height = e.currentTarget.scrollHeight + 'px';
-					}
-				}}
+				on:input={updateTextareaSize}
 			/>
 			<Tooltip message="Get text from a photo">
-				<Button icon="photo_camera" disabled />
+				<input
+					type="file"
+					accept="image/*"
+					class="hidden"
+					bind:this={file}
+					on:change={handleFile}
+				/>
+				<Button
+					on:click={() => file.click()}
+					icon="photo_camera"
+					loading={!tesseractWorker || convertingImage}
+					disabled={!tesseractWorker || convertingImage}
+				/>
 			</Tooltip>
 			<Button endIcon="auto_fix_normal" type="submit" on:click={send}>Send</Button>
 		</div>

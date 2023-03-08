@@ -6,7 +6,7 @@
 	export let name: string | undefined = undefined;
 	export let label: string | undefined = undefined;
 	export let altLabel: string | undefined = undefined;
-	export let input: HTMLInputElement | undefined = undefined;
+	export let input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | undefined = undefined;
 	export let value: string | number | undefined = undefined;
 	export let type: 'text' | 'password' | 'number' | 'file' | 'textarea' | 'select' = 'text';
 	export let options: [string, string][] = [];
@@ -38,6 +38,7 @@
 		{#if type == 'textarea'}
 			<textarea
 				bind:value
+				bind:this={input}
 				{id}
 				{name}
 				class={cn('textarea textarea-bordered w-full', { 'max-w-xs': !block }, inputClass)}
@@ -47,6 +48,7 @@
 		{:else if type == 'select'}
 			<select
 				bind:value
+				bind:this={input}
 				{id}
 				{name}
 				class={cn('select select-bordered capitalize w-full', { 'max-w-xs': !block }, inputClass)}
