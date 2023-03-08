@@ -36,6 +36,7 @@
 	}
 
 	let tesseractWorker: Tesseract.Worker | null = null;
+	let workerError=false
 	async function send() {
 		try {
 			responseWaiting = true;
@@ -95,13 +96,17 @@
 	}
 
 	onMount(async () => {
-		const worker = await Tesseract.createWorker({});
-		await worker.loadLanguage('eng+ita');
-		await worker.initialize('eng+ita');
+		try {
+			const worker = await Tesseract.createWorker({});
+			await worker.loadLanguage('eng+ita');
+			await worker.initialize('eng+ita');
 
-		await worker.initialize();
+			await worker.initialize();
 
-		tesseractWorker = worker;
+			tesseractWorker = worker;
+		} catch (error) {
+			workerError=true
+		}
 	});
 </script>
 
@@ -140,8 +145,8 @@
 				<Button
 					on:click={() => file.click()}
 					icon="photo_camera"
-					loading={!tesseractWorker || convertingImage}
-					disabled={!tesseractWorker || convertingImage}
+					loading={!workerError && !tesseractWorker || convertingImage}
+					disabled={workerError || !tesseractWorker || convertingImage}
 				/>
 			</Tooltip>
 			<Button
