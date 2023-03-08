@@ -9,6 +9,7 @@
 	import { readAndCompressImage } from 'browser-image-resizer';
 
 	let message: string = '';
+	let responseWaiting = false;
 
 	let localMessages: Message[] = [
 		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
@@ -35,22 +36,29 @@
 
 	let tesseractWorker: Tesseract.Worker | null = null;
 	async function send() {
-		const response = (await (
-			await fetch('', {
-				body: JSON.stringify({ message }),
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json'
-				}
-			})
-		).json()) as { response: { role: 'assistant'; content: string } };
-		localMessages.push({ message, side: 'left' });
-		localMessages.push({ message: response.response.content, side: 'right' });
-		localMessages = localMessages;
-		message = '';
-		setTimeout(() => {
-			document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
-		}, 0);
+		try {
+			responseWaiting = true;
+			const response = (await (
+				await fetch('', {
+					body: JSON.stringify({ message }),
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json'
+					}
+				})
+			).json()) as { response: { role: 'assistant'; content: string } };
+			localMessages.push({ message, side: 'left' });
+			localMessages.push({ message: response.response.content, side: 'right' });
+			localMessages = localMessages;
+			message = '';
+			setTimeout(() => {
+				document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
+			}, 0);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			responseWaiting = false;
+		}
 	}
 
 	async function handleFile(
@@ -74,11 +82,7 @@
 					maxWidth: 800,
 					maxHeight: 600
 				});
-				const ret = await tesseractWorker.recognize(
-					await resizedBlob.arrayBuffer(),
-					{ rotateAuto: true },
-					{ imageColor: true, imageGrey: true, imageBinary: true }
-				);
+				const ret = await tesseractWorker.recognize(resizedBlob, { rotateAuto: true });
 				message = ret.data.text;
 			} catch (error) {
 				console.error(error);
@@ -90,8 +94,8 @@
 
 	onMount(async () => {
 		const worker = await Tesseract.createWorker({});
-		await worker.loadLanguage('eng');
-		await worker.initialize('eng');
+		await worker.loadLanguage('eng+ita');
+		await worker.initialize('eng+ita');
 
 		await worker.initialize();
 
@@ -137,7 +141,7 @@
 					disabled={!tesseractWorker || convertingImage}
 				/>
 			</Tooltip>
-			<Button endIcon="auto_fix_normal" type="submit" on:click={send}>Send</Button>
+			<Button endIcon="auto_fix_normal" type="submit" on:click={send} disabled={responseWaiting} loading={responseWaiting}>Send</Button>
 		</div>
 	</main>
 </div>
