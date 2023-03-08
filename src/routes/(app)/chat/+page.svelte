@@ -7,12 +7,24 @@
 	import { onMount } from 'svelte';
 	import Tesseract from 'tesseract.js';
 	import { readAndCompressImage } from 'browser-image-resizer';
+	import Header from '$lib/components/Header.svelte';
 
 	let message: string = '';
 	let responseWaiting = false;
 
 	let localMessages: Message[] = [
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
+		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' },
 	];
 
 	let convertingImage = false;
@@ -104,6 +116,7 @@
 	});
 </script>
 
+<Header />
 <div class="flex-1 w-full flex flex-col items-center justify-center">
 	<main class="w-full max-w-4xl h-2/3 mobile:h-full mobile:w-full flex flex-col">
 		<section class="flex-1 w-full px-2 py-1">
