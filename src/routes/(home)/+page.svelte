@@ -42,6 +42,8 @@
 	>
 	<a
 		class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
+		data-sveltekit-preload-data="off"
+		rel="external"
 		href="/chat">Start Cheating Now</a
 	>
 </div>

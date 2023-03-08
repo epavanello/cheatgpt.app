@@ -82,6 +82,7 @@
 					maxWidth: 800,
 					maxHeight: 600
 				});
+				// TODO - add rectangle https://github.com/naptha/tesseract.js/blob/master/docs/examples.md#with-only-part-of-the-image-201
 				const ret = await tesseractWorker.recognize(resizedBlob, { rotateAuto: true });
 				message = ret.data.text;
 			} catch (error) {
@@ -141,7 +142,13 @@
 					disabled={!tesseractWorker || convertingImage}
 				/>
 			</Tooltip>
-			<Button endIcon="auto_fix_normal" type="submit" on:click={send} disabled={responseWaiting} loading={responseWaiting}>Send</Button>
+			<Button
+				endIcon="auto_fix_normal"
+				type="submit"
+				on:click={send}
+				disabled={responseWaiting}
+				loading={responseWaiting}>Send</Button
+			>
 		</div>
 	</main>
 </div>
