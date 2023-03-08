@@ -6,6 +6,7 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { onMount } from 'svelte';
 	import Tesseract from 'tesseract.js';
+	import { readAndCompressImage } from 'browser-image-resizer';
 
 	let message: string = '';
 
@@ -68,14 +69,19 @@
 			try {
 				const file = event.currentTarget.files[0];
 				event.currentTarget.value = '';
+				const resizedBlob = await readAndCompressImage(file, {
+					quality: 0.5,
+					maxWidth: 800,
+					maxHeight: 600
+				});
 				const ret = await tesseractWorker.recognize(
-					file,
+					await resizedBlob.arrayBuffer(),
 					{ rotateAuto: true },
 					{ imageColor: true, imageGrey: true, imageBinary: true }
 				);
-				console.log(ret.data);
 				message = ret.data.text;
 			} catch (error) {
+				console.error(error);
 			} finally {
 				convertingImage = false;
 			}
