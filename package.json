@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --host --open",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -32,7 +32,13 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"browser-image-resizer": "^2.4.1",
 		"classnames": "^2.3.2",
-		"daisyui": "^2.51.3"
+		"cross-env": "^7.0.3",
+		"daisyui": "^2.51.3",
+		"install": "^0.13.0",
+		"npm": "^9.6.1",
+		"openai": "^3.2.1",
+		"tesseract.js": "^4.0.2"
 	}
 }

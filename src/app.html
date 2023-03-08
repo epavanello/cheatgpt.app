@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="text-slate-900 dark:text-slate-50 overflow-auto scroll-smooth">
 
 <head>
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
-	<meta name="viewport" content="width=device-width" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 	<title>CheatGPT - Discover a better way to cheat</title>
 	<meta name="description"
 		content="CheatGPT is a powerful AI-powered tool that can instantly provide you with accurate answers to your questions. Whether you're a student, researcher, or just curious, CheatGPT has you covered.">
@@ -22,7 +24,6 @@
 
 	<meta name="keywords" content="CheatGPT, AI, saas, answers, questions, students, research, OpenAI">
 	<meta name="author" content="Pavanello Emanuele">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<!-- Google tag (gtag.js) -->
@@ -37,9 +38,8 @@
 	%sveltekit.head%
 </head>
 
-<body data-sveltekit-preload-data="hover">
-	<div style="display: contents" class="bg-slate-50 text-slate-900 dark:bg-[#17181C] dark:text-slate-50">
-		%sveltekit.body%</div>
+<body data-sveltekit-preload-data="hover" class="relative flex flex-col">
+	%sveltekit.body%
 </body>
 
 </html>
