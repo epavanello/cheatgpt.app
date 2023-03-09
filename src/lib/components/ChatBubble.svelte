@@ -9,5 +9,5 @@
 	transition:fly={{ duration: 1000 }}
 	class={`chat ${side == 'left' ? 'chat-start' : 'chat-end'}`}
 >
-	<div class="chat-bubble text-left">{message}</div>
+	<div class="chat-bubble text-left whitespace-pre-wrap">{message}</div>
 </div>

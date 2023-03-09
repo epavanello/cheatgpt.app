@@ -13,7 +13,15 @@
 	let responseWaiting = false;
 
 	let localMessages: Message[] = [
-		{ message: 'How can I assist you in cheating your exam? 😜', side: 'right' }
+		{
+			message: `Do you need help cheating on exams? 😜
+Look no further! 
+Just fire away with your questions and get lightning-fast, concise answers from yours truly. 
+And if you're feeling extra sneaky, snap a quick pic of that textbook page and let the AI work its magic to extract the text for you.
+
+Just don't blame me if you get caught! 😂`,
+			side: 'right'
+		}
 	];
 
 	let convertingImage = false;
@@ -36,10 +44,19 @@
 	}
 
 	let tesseractWorker: Tesseract.Worker | null = null;
-	let workerError=false
+	let workerError = false;
+
+	function addMessage(message: Message) {
+		localMessages.push(message);
+		localMessages = localMessages;
+	}
+
 	async function send() {
 		try {
 			responseWaiting = true;
+			addMessage({ message, side: 'left' });
+			message = '';
+			textarea.focus();
 			const response = (await (
 				await fetch('', {
 					body: JSON.stringify({ message }),
@@ -49,10 +66,7 @@
 					}
 				})
 			).json()) as { response: { role: 'assistant'; content: string } };
-			localMessages.push({ message, side: 'left' });
-			localMessages.push({ message: response.response.content, side: 'right' });
-			localMessages = localMessages;
-			message = '';
+			addMessage({ message: response.response.content, side: 'right' });
 			setTimeout(() => {
 				document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
 			}, 0);
@@ -98,14 +112,12 @@
 	onMount(async () => {
 		try {
 			const worker = await Tesseract.createWorker({});
-			await worker.loadLanguage('eng+ita');
-			await worker.initialize('eng+ita');
-
-			await worker.initialize();
+			await worker.loadLanguage('eng');
+			await worker.initialize('eng');
 
 			tesseractWorker = worker;
 		} catch (error) {
-			workerError=true
+			workerError = true;
 		}
 	});
 </script>
@@ -119,7 +131,7 @@
 			{/each}
 		</section>
 		<div
-			class="sticky bottom-0 bg-base-100 px-2 py-1 shadow-sm p w-full flex flex-row gap-2 items-center"
+			class="sticky bottom-0 bg-base-100 px-2 py-1 shadow-sm p w-full flex flex-row gap-2 items-start"
 		>
 			<Input
 				type="textarea"
@@ -133,6 +145,7 @@
 				bind:input={textarea}
 				bind:value={message}
 				on:input={updateTextareaSize}
+				tabindex="1"
 			/>
 			<Tooltip message="Get text from a photo">
 				<input
@@ -144,17 +157,20 @@
 				/>
 				<Button
 					on:click={() => file.click()}
+					type="button"
 					icon="photo_camera"
-					loading={!workerError && !tesseractWorker || convertingImage}
+					loading={(!workerError && !tesseractWorker) || convertingImage}
 					disabled={workerError || !tesseractWorker || convertingImage}
+					tabindex="3"
 				/>
 			</Tooltip>
 			<Button
 				endIcon="auto_fix_normal"
-				type="submit"
+				type="button"
 				on:click={send}
 				disabled={responseWaiting}
-				loading={responseWaiting}>Send</Button
+				loading={responseWaiting}
+				tabindex="2">Send</Button
 			>
 		</div>
 	</main>
