@@ -20,7 +20,7 @@ Just fire away with your questions and get lightning-fast, concise answers from 
 And if you're feeling extra sneaky, snap a quick pic of that textbook page and let the AI work its magic to extract the text for you.
 
 Just don't blame me if you get caught! 😂`,
-			side: 'right'
+			role: 'assistant'
 		}
 	];
 
@@ -54,19 +54,20 @@ Just don't blame me if you get caught! 😂`,
 	async function send() {
 		try {
 			responseWaiting = true;
-			addMessage({ message, side: 'left' });
+			addMessage({ message, role: 'user' });
+			const messageToSend = message;
 			message = '';
 			textarea.focus();
 			const response = (await (
 				await fetch('', {
-					body: JSON.stringify({ message }),
+					body: JSON.stringify({ message: messageToSend }),
 					method: 'POST',
 					headers: {
 						'content-type': 'application/json'
 					}
 				})
 			).json()) as { response: { role: 'assistant'; content: string } };
-			addMessage({ message: response.response.content, side: 'right' });
+			addMessage({ message: response.response.content, role: 'assistant' });
 			setTimeout(() => {
 				document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
 			}, 0);
@@ -127,7 +128,7 @@ Just don't blame me if you get caught! 😂`,
 	<main class="w-full max-w-4xl h-2/3 mobile:h-full mobile:w-full flex flex-col">
 		<section class="flex-1 w-full px-2 py-1">
 			{#each localMessages as message}
-				<ChatBubble message={message.message} side={message.side} />
+				<ChatBubble message={message.message} role={message.role} />
 			{/each}
 		</section>
 		<div

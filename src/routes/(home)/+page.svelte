@@ -89,7 +89,7 @@
 					bind:this={phoneScroller}
 				>
 					{#each renderedMessages as message}
-						<ChatBubble message={message.message} side={message.side} />
+						<ChatBubble message={message.message} role={message.role} />
 					{/each}
 				</div>
 			</div>
