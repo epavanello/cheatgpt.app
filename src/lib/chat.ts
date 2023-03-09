@@ -2,6 +2,13 @@ export interface Message {
 	role: 'user' | 'assistant';
 	message: string;
 }
+
+export enum ResponseType {
+	ConinciseAnswers = '1',
+	Summarize = '2',
+	Explain = '3'
+}
+
 export const messages: Message[] = [
 	{ role: 'user', message: 'What is the square root of 9896?' },
 	{ role: 'assistant', message: '99.4796' },

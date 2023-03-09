@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { IconTypes } from '$lib/icon-types';
+	import type { Size } from '$lib/sizes';
 	import cn from 'classnames';
 	import Icon from './Icon.svelte';
 
 	export let icon: IconTypes | undefined = undefined;
 	export let startIcon: IconTypes | undefined = undefined;
 	export let endIcon: IconTypes | undefined = undefined;
-	export let size: 'tiny' | 'small' | 'normal' | 'large' = 'normal';
+	export let size: Size = 'normal';
 	export let primary = false;
 	export let ghost = false;
 	export let block = false;

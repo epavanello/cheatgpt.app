@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Message } from '$lib/chat';
+	import { ResponseType, type Message } from '$lib/chat';
 	import Button from '$lib/components/Button.svelte';
 	import ChatBubble from '$lib/components/ChatBubble.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -11,6 +11,8 @@
 
 	let message: string = '';
 	let responseWaiting = false;
+
+	let responseType: ResponseType = ResponseType.ConinciseAnswers;
 
 	let localMessages: Message[] = [
 		{
@@ -32,7 +34,16 @@ Just don't blame me if you get caught! 😂`,
 	function updateTextareaSize() {
 		if (textarea) {
 			textarea.style.height = 'auto';
-			textarea.style.height = textarea.scrollHeight + 'px';
+			textarea.style.height = textarea.scrollHeight + 2 + 'px';
+		}
+	}
+	function handlePaste(e: ClipboardEvent) {
+		if (
+			e.clipboardData &&
+			e.clipboardData.items.length == 1 &&
+			e.clipboardData.items[0].type.indexOf('image') !== -1
+		) {
+			handleFile(e.clipboardData.items[0].getAsFile());
 		}
 	}
 
@@ -78,30 +89,34 @@ Just don't blame me if you get caught! 😂`,
 		}
 	}
 
-	async function handleFile(
+	async function handleFile(file: File | null) {
+		if (file && tesseractWorker) {
+			const resizedBlob = await readAndCompressImage(file, {
+				quality: 0.5,
+				maxWidth: 800,
+				maxHeight: 600
+			});
+			// TODO - add rectangle https://github.com/naptha/tesseract.js/blob/master/docs/examples.md#with-only-part-of-the-image-201
+			const ret = await tesseractWorker.recognize(resizedBlob, { rotateAuto: true });
+			message = ret.data.text;
+		}
+	}
+
+	async function handleFileChange(
 		event: Event & {
 			currentTarget: EventTarget & HTMLInputElement;
 		}
 	) {
 		if (
-			tesseractWorker &&
 			event.currentTarget.files &&
 			event.currentTarget.parentNode &&
-			event.currentTarget.files.length == 1 &&
-			event.currentTarget.files[0]
+			event.currentTarget.files.length == 1
 		) {
 			convertingImage = true;
 			try {
 				const file = event.currentTarget.files[0];
 				event.currentTarget.value = '';
-				const resizedBlob = await readAndCompressImage(file, {
-					quality: 0.5,
-					maxWidth: 800,
-					maxHeight: 600
-				});
-				// TODO - add rectangle https://github.com/naptha/tesseract.js/blob/master/docs/examples.md#with-only-part-of-the-image-201
-				const ret = await tesseractWorker.recognize(resizedBlob, { rotateAuto: true });
-				message = ret.data.text;
+				await handleFile(file);
 			} catch (error) {
 				console.error(error);
 			} finally {
@@ -131,48 +146,66 @@ Just don't blame me if you get caught! 😂`,
 				<ChatBubble message={message.message} role={message.role} />
 			{/each}
 		</section>
-		<div
-			class="sticky bottom-0 bg-base-100 px-2 py-1 shadow-sm p w-full flex flex-row gap-2 items-start"
-		>
-			<Input
-				type="textarea"
-				id="chat-input"
-				rows="1"
-				block
-				containerClass="flex-1"
-				inputClass="resize-none overflow-hidden"
-				placeholder="Ask here..."
-				autocomplete="off"
-				bind:input={textarea}
-				bind:value={message}
-				on:input={updateTextareaSize}
-				tabindex="1"
-			/>
-			<Tooltip message="Get text from a photo">
-				<input
-					type="file"
-					accept="image/*"
-					class="hidden"
-					bind:this={file}
-					on:change={handleFile}
-				/>
-				<Button
-					on:click={() => file.click()}
-					type="button"
-					icon="photo_camera"
-					loading={(!workerError && !tesseractWorker) || convertingImage}
-					disabled={workerError || !tesseractWorker || convertingImage}
+		<footer class="sticky bottom-0 bg-base-100 px-2 py-1 shadow-sm p w-full flex flex-col gap-2">
+			<div class="flex flex-row gap-2 items-end">
+				<Input
+					type="select"
+					options={[
+						['1', 'Coincise answers'],
+						['2', 'Summarize'],
+						['3', 'Explain']
+					]}
+					bind:value={responseType}
+					size="small"
+					block
+					containerClass="flex-1"
+					label="Response type"
 					tabindex="3"
 				/>
-			</Tooltip>
-			<Button
-				endIcon="auto_fix_normal"
-				type="button"
-				on:click={send}
-				disabled={responseWaiting}
-				loading={responseWaiting}
-				tabindex="2">Send</Button
-			>
-		</div>
+				<Tooltip message="Get text from a photo">
+					<input
+						type="file"
+						accept="image/*"
+						class="hidden"
+						bind:this={file}
+						on:change={handleFileChange}
+					/>
+					<Button
+						on:click={() => file.click()}
+						type="button"
+						icon="photo_camera"
+						loading={(!workerError && !tesseractWorker) || convertingImage}
+						disabled={workerError || !tesseractWorker || convertingImage}
+						tabindex="4"
+						size="small"
+					/>
+				</Tooltip>
+			</div>
+			<div class="flex flex-row gap-2 items-end">
+				<Input
+					type="textarea"
+					id="chat-input"
+					rows="1"
+					block
+					containerClass="flex-1"
+					inputClass="resize-none max-h-64 leading-none"
+					placeholder="Ask here or paste a screenshot..."
+					autocomplete="off"
+					bind:input={textarea}
+					bind:value={message}
+					on:input={updateTextareaSize}
+					on:paste={handlePaste}
+					tabindex="1"
+				/>
+				<Button
+					endIcon="auto_fix_normal"
+					type="button"
+					on:click={send}
+					disabled={responseWaiting}
+					loading={responseWaiting}
+					tabindex="2">Send</Button
+				>
+			</div>
+		</footer>
 	</main>
 </div>
