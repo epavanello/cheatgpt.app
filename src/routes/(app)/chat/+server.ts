@@ -22,19 +22,19 @@ export const POST: RequestHandler = async ({ request }) => {
 				messages.push({
 					role: 'system',
 					content:
-						'Answer succinctly and directly, do not provide explanations or elaborations, simply state the direct response to the question asked'
+						'Answer in the language of the question, answer succinctly and directly, simply state the direct response to the question asked, do not provide explanations or elaborations'
 				});
 				break;
 			case ResponseType.Explain:
 				messages.push({
 					role: 'system',
-					content: 'Reply briefly and add an explanation of the answer at the end'
+					content: 'Answer in the language of the question, answer succinctly and directly, simply state the direct response to the question asked, after that add the explanation of the answer'
 				});
 				break;
 			case ResponseType.Summarize:
 				messages.push({
 					role: 'system',
-					content: 'Summarize the indicated content without introductions or elaborations'
+					content: 'Answer in the language of the question, answer succinctly and directly, summarize the indicated content'
 				});
 				break;
 		}

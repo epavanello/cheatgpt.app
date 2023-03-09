@@ -7,7 +7,7 @@
 </script>
 
 <div
-	transition:fly={{ duration: 1000 }}
+	in:fly={{ duration: 1000 }}
 	class={`chat ${role == 'assistant' ? 'chat-start' : 'chat-end'}`}
 >
 	<!-- <Typewriter interval={100}> -->

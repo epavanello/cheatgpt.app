@@ -60,6 +60,11 @@ Just don't blame me if you get caught! 😂`,
 	function addMessage(message: Message) {
 		localMessages.push(message);
 		localMessages = localMessages;
+		setTimeout(scrollToEnd, 0);
+	}
+
+	function scrollToEnd() {
+		document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
 	}
 
 	async function send() {
@@ -71,7 +76,7 @@ Just don't blame me if you get caught! 😂`,
 			textarea.focus();
 			const response = (await (
 				await fetch('', {
-					body: JSON.stringify({ message: messageToSend }),
+					body: JSON.stringify({ message: messageToSend, responseType }),
 					method: 'POST',
 					headers: {
 						'content-type': 'application/json'
@@ -79,9 +84,6 @@ Just don't blame me if you get caught! 😂`,
 				})
 			).json()) as { response: { role: 'assistant'; content: string } };
 			addMessage({ message: response.response.content, role: 'assistant' });
-			setTimeout(() => {
-				document.documentElement.scrollTo(0, document.documentElement.scrollHeight);
-			}, 0);
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -140,13 +142,18 @@ Just don't blame me if you get caught! 😂`,
 
 <Header />
 <div class="flex-1 w-full flex flex-col items-center justify-center">
-	<main class="w-full max-w-4xl h-2/3 mobile:h-full mobile:w-full flex flex-col">
+	<main class="w-full max-w-4xl h-full mobile:w-full flex flex-col">
 		<section class="flex-1 w-full px-2 py-1">
 			{#each localMessages as message}
 				<ChatBubble message={message.message} role={message.role} />
 			{/each}
+			{#if responseWaiting}
+				<ChatBubble message="I'm thinking..." role="assistant" />
+			{/if}
 		</section>
-		<footer class="sticky bottom-0 bg-base-100 px-2 py-1 shadow-sm p w-full flex flex-col gap-2">
+	</main>
+	<footer class="sticky bottom-0 bg-base-200 px-2 pb-2 shadow-sm p w-full">
+		<div class="w-full max-w-4xl mx-auto flex flex-col gap-2">
 			<div class="flex flex-row gap-2 items-end">
 				<Input
 					type="select"
@@ -162,7 +169,7 @@ Just don't blame me if you get caught! 😂`,
 					label="Response type"
 					tabindex="3"
 				/>
-				<Tooltip message="Get text from a photo">
+				<Tooltip message="Get text from a photo" position="left">
 					<input
 						type="file"
 						accept="image/*"
@@ -174,7 +181,7 @@ Just don't blame me if you get caught! 😂`,
 						on:click={() => file.click()}
 						type="button"
 						icon="photo_camera"
-						loading={(!workerError && !tesseractWorker) || convertingImage}
+						loading={convertingImage}
 						disabled={workerError || !tesseractWorker || convertingImage}
 						tabindex="4"
 						size="small"
@@ -206,6 +213,6 @@ Just don't blame me if you get caught! 😂`,
 					tabindex="2">Send</Button
 				>
 			</div>
-		</footer>
-	</main>
+		</div>
+	</footer>
 </div>
