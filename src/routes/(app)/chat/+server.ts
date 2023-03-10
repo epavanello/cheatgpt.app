@@ -22,26 +22,26 @@ export const POST: RequestHandler = async ({ request }) => {
 				messages.push({
 					role: 'system',
 					content:
-						'Answer in the language of the question, answer succinctly and directly, simply state the direct response to the question asked, do not provide explanations or elaborations'
+						'You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Answer in the language of the question. Do not provide explanations or elaborations'
 				});
 				break;
 			case ResponseType.Explain:
 				messages.push({
 					role: 'system',
-					content: 'Answer in the language of the question, answer succinctly and directly, simply state the direct response to the question asked, after that add the explanation of the answer'
+					content: 'You are ChatGPT, a large language model trained by OpenAI. Answer in the language of the question. Answer as concisely as possible. After that add the explanation of the answer'
 				});
 				break;
 			case ResponseType.Summarize:
 				messages.push({
 					role: 'system',
-					content: 'Answer in the language of the next message, summarize the indicated content'
+					content: 'You are ChatGPT, a large language model trained by OpenAI. Answer in the language of the next message. Smmarize the indicated content'
 				});
 				break;
 		}
 		messages.push({ role: 'user', content: message });
 		const completion = await openai.createChatCompletion({
 			messages,
-			model: 'gpt-3.5-turbo'
+			model: 'gpt-3.5-turbo-0301'
 		});
 
 		return json({ response: completion.data.choices[0].message });
