@@ -33,7 +33,7 @@ Just don't blame me if you get caught! 😂`,
 
 	let textarea: HTMLTextAreaElement;
 	let file: HTMLInputElement;
-	let openPremiumModal = true;
+	let openPremiumModal = false;
 
 	function updateTextareaSize() {
 		if (textarea) {
