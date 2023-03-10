@@ -39,6 +39,7 @@
 		"install": "^0.13.0",
 		"npm": "^9.6.1",
 		"openai": "^3.2.1",
+		"svelte-typewriter": "^3.1.4",
 		"tesseract.js": "^4.0.2"
 	}
 }

@@ -3,6 +3,7 @@
 
 	import { onMount } from 'svelte';
 	import { messages, type Message } from '$lib/chat';
+	import Button from '$lib/components/Button.svelte';
 
 	let renderedMessages: Message[] = [];
 	const copyMessages = async () => {
@@ -22,30 +23,26 @@
 	let phoneScroller: HTMLDivElement;
 </script>
 
-<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
-	Cheat smarter with <!-- -->
-	<span class="relative whitespace-nowrap text-[#3290EE]"
-		><span class="relative">AI-powered</span></span
-	>
-	<!-- -->CheatGPT
-</h1>
+<div class="flex flex-col items-center xl:flex-row mb-24">
+	<img src="/logo.png" alt="" class="w-64 md:w-96 rounded-r-lg mb-12 xl:mb-0" />
+	<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
+		Cheat smarter with <!-- -->
+		<span class="relative whitespace-nowrap text-[#3290EE]"
+			><span class="relative">AI-powered</span></span
+		>
+		<!-- -->CheatGPT
+	</h1>
+</div>
+
 <p class="mx-auto max-w-2xl font-light opacity-85 sm:text-xl mt-8">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
 </p>
-<div class="flex justify-center space-x-4">
-	<a
-		class="bg-white rounded-xl text-black font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-gray-100 border"
-		href="https://github.com/epavanello/cheatgpt.app"
-		target="_blank"
-		rel="noreferrer">Learn how it's built</a
+<div class="flex justify-center space-x-4 mt-8">
+	<Button link="https://github.com/epavanello/cheatgpt.app" target="_blank" outline normalCase
+		>Learn how it's built</Button
 	>
-	<a
-		class="bg-black rounded-xl text-white font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-black/80"
-		data-sveltekit-preload-data="off"
-		rel="external"
-		href="/chat">Start Cheating Now</a
-	>
+	<Button link="/chat" data-sveltekit-preload-data="off" animated>Start Cheating Now</Button>
 </div>
 
 <form
@@ -89,7 +86,7 @@
 					bind:this={phoneScroller}
 				>
 					{#each renderedMessages as message}
-						<ChatBubble message={message.message} side={message.side} />
+						<ChatBubble message={message.message} role={message.role} />
 					{/each}
 				</div>
 			</div>

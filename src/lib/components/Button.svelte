@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { IconTypes } from '$lib/icon-types';
+	import type { Size } from '$lib/sizes';
 	import cn from 'classnames';
 	import Icon from './Icon.svelte';
 
 	export let icon: IconTypes | undefined = undefined;
 	export let startIcon: IconTypes | undefined = undefined;
 	export let endIcon: IconTypes | undefined = undefined;
-	export let size: 'tiny' | 'small' | 'normal' | 'large' = 'normal';
+	export let size: Size = 'normal';
 	export let primary = false;
 	export let ghost = false;
 	export let block = false;
@@ -32,7 +33,7 @@
 	data-sveltekit-preload-data="off"
 	on:click
 	class={cn(
-		'btn gap-1 z-0',
+		'btn gap-1 z-0 !no-underline',
 		{
 			'btn-xs': size == 'tiny',
 			'btn-sm': size == 'small',
@@ -66,14 +67,14 @@
 	{#if icon}
 		<Icon name={icon} {size} />
 	{:else if disco}
-		<span aria-hidden class="absolute inset-0 overflow-hidden rounded-lg blur-sm -z-10">
+		<span aria-hidden class="absolute inset-0 overflow-hidden rounded-xl blur-sm -z-10">
 			<span
 				aria-hidden
-				class="absolute inset-0 scale-x-[2.0] before:absolute before:inset-0 before:top-1/2 before:aspect-square before:animate-disco before:bg-gradient-conic before:from-[#4ade80] before:via-[#3b82f6] before:to-[#4ade80]"
+				class="absolute inset-0 scale-x-[2.0] before:absolute before:inset-0 before:top-1/2 before:aspect-square before:animate-disco before:bg-gradient-conic before:from-[#e036ad] before:via-[#ffd413] before:to-[#e036ad]"
 			/>
 		</span>
 		<span
-			class="absolute inset-px grid place-items-center rounded-lg bg-gray-800 bg-gradient-to-tr from-gray-800 to-gray-700 -z-10"
+			class="absolute inset-px grid place-items-center rounded-xl bg-gray-800 bg-gradient-to-tr from-gray-800 to-gray-700 -z-10"
 		/>
 		<span class="relative text-white flex flex-row items-center">
 			<slot />

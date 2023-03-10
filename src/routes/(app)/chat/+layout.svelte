@@ -1,7 +1,10 @@
 <script>
-	import GithubIcon from '$lib/components/GithubIcon.svelte';
-	import TwitterIcon from '$lib/components/TwitterIcon.svelte';
+	import { isDark } from '$lib/theme';
 	import '../../../app.css';
 </script>
+
+<svelte:head>
+	<meta name="theme-color" content={$isDark ? '#2A303C' : '#FFFFFF'} />
+</svelte:head>
 
 <slot />
