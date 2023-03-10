@@ -5,14 +5,12 @@
 	import TwitterIcon from '$lib/components/TwitterIcon.svelte';
 
 	import '../../app.css';
-	import { browser } from '$app/environment';
+	import { isDark } from '$lib/theme';
 
-	const isDark =
-		browser && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 </script>
 
 <svelte:head>
-	<meta name="theme-color" content={isDark ? '#2A303C' : '#FFFFFF'} />
+	<meta name="theme-color" content={$isDark ? '#2A303C' : '#FFFFFF'} />
 </svelte:head>
 
 <Header />
