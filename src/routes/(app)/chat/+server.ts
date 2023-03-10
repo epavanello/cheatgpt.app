@@ -34,7 +34,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			case ResponseType.Summarize:
 				messages.push({
 					role: 'system',
-					content: 'Answer in the language of the question, answer succinctly and directly, summarize the indicated content'
+					content: 'Answer in the language of the next message, summarize the indicated content'
 				});
 				break;
 		}

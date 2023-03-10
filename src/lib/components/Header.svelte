@@ -6,7 +6,7 @@
 </script>
 
 <header
-	class="w-full shadow shadow-gray-300 dark:shadow-black py-4 sm:px-4 sticky top-0 z-40 bg-base-100"
+	class="w-full shadow shadow-gray-300 dark:shadow-black py-4 sm:px-4 sticky top-0 z-40 dark:bg-base-300"
 >
 	<div class="max-w-7xl mx-auto flex flex-wrap flex-row mobile:justify-center gap-2 justify-between items-center">
 		<a class="flex space-x-2 !no-underline" href="/">
