@@ -32,6 +32,13 @@ module.exports = {
 					primary: '#3290EE',
 					'primary-focus': '#0f79e3'
 				}
+			},
+			{
+				dark: {
+					...require('daisyui/src/colors/themes')['[data-theme=dark]'],
+					primary: '#3290EE',
+					'primary-focus': '#0f79e3'
+				}
 			}
 		]
 	},
