@@ -10,3 +10,17 @@ html,
 body {
 	@apply h-full m-0 p-0;
 }
+
+.background-gradient:before {
+	background: radial-gradient(
+		30% 20% at 50% 50%,
+		rgb(50 144 238 / 32%) 0,
+		rgb(255 255 255 / 0%) 100%
+	);
+	z-index: -10;
+	content: '';
+	position: absolute;
+	inset: 0;
+	transform: scale(1);
+	pointer-events: none;
+}

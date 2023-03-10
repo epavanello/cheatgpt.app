@@ -22,13 +22,17 @@
 	let phoneScroller: HTMLDivElement;
 </script>
 
-<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
-	Cheat smarter with <!-- -->
-	<span class="relative whitespace-nowrap text-[#3290EE]"
-		><span class="relative">AI-powered</span></span
-	>
-	<!-- -->CheatGPT
-</h1>
+<div class="flex flex-col items-center xl:flex-row mb-24">
+	<img src="/logo.png" alt="" class="w-64 md:w-96 rounded-r-lg mb-12 md:mb-0" />
+	<h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal sm:text-7xl">
+		Cheat smarter with <!-- -->
+		<span class="relative whitespace-nowrap text-[#3290EE]"
+			><span class="relative">AI-powered</span></span
+		>
+		<!-- -->CheatGPT
+	</h1>
+</div>
+
 <p class="mx-auto max-w-2xl font-light opacity-85 sm:text-xl mt-8">
 	AI might be taking over the world, but at least we can use it to cheat like champions with
 	CheatGPT
