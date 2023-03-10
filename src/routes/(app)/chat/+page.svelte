@@ -77,7 +77,6 @@ Just don't blame me if you get caught! 😂`,
 			addMessage({ message, role: 'user' });
 			const messageToSend = message;
 			message = '';
-			textarea.focus();
 			const response = (await (
 				await fetch('', {
 					body: JSON.stringify({ message: messageToSend, responseType }),
