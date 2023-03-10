@@ -8,6 +8,9 @@
 	import Tesseract from 'tesseract.js';
 	import { readAndCompressImage } from 'browser-image-resizer';
 	import Header from '$lib/components/Header.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Badge from '$lib/components/Badge.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 
 	let message: string = '';
 	let responseWaiting = false;
@@ -30,6 +33,7 @@ Just don't blame me if you get caught! 😂`,
 
 	let textarea: HTMLTextAreaElement;
 	let file: HTMLInputElement;
+	let openPremiumModal = true;
 
 	function updateTextareaSize() {
 		if (textarea) {
@@ -140,9 +144,57 @@ Just don't blame me if you get caught! 😂`,
 	});
 </script>
 
-<Header />
+<Modal bind:open={openPremiumModal}>
+	<p slot="title" class="text-center">Everything included in one clear pricing plan</p>
+	<div class="flex flex-col items-center ">
+		<p class="text-sm flex flex-col gap-2 items-center">
+			<span> Promo code</span>
+			<Button
+				startIcon="sell"
+				endIcon="copy_all"
+				size="small"
+				on:click={() => navigator.clipboard.writeText('EARLYBIRD')}>EARLYBIRD</Button
+			>
+		</p>
+		<h2 class="font-bold text-6xl mt-6">$5.99</h2>
+		<p>per month</p>
+
+		<hr />
+		<h3 class="font-bold text-2xl mt-12 mb-6">Premium features for CheatGPT:</h3>
+		<ul>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> All current and future premium features
+			</li>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> Summarization tools
+			</li>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> OCR for photos or screenshots
+			</li>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> In-depth explanations
+			</li>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> Code snippets <i>(future)</i>
+			</li>
+			<li class="flex flex-row items-center gap-2">
+				<Icon name="done" class="text-green-500" /> Multi-language support <i>(future)</i>
+			</li>
+		</ul>
+		<Button animated link="https://buy.stripe.com/5kA28CeOy6mY3x64gg" class="mt-6">Subscribe</Button>
+	</div>
+</Modal>
+
+<Header compactGithub>
+	<Button
+		animated
+		on:click={() => {
+			openPremiumModal = true;
+		}}>Unlock premium features</Button
+	>
+</Header>
 <div class="flex-1 w-full flex flex-col items-center justify-center">
-	<main class="w-full max-w-4xl h-full mobile:w-full flex flex-col">
+	<main class="w-full max-w-4xl h-full lg:h-3/4 mobile:w-full flex flex-col">
 		<section class="flex-1 w-full px-2 py-1">
 			{#each localMessages as message}
 				<ChatBubble message={message.message} role={message.role} />
@@ -151,68 +203,69 @@ Just don't blame me if you get caught! 😂`,
 				<ChatBubble message="I'm thinking..." role="assistant" />
 			{/if}
 		</section>
-	</main>
-	<footer class="sticky bottom-0 bg-base-200 px-2 pb-2 shadow-sm p w-full">
-		<div class="w-full max-w-4xl mx-auto flex flex-col gap-2">
-			<div class="flex flex-row gap-2 items-end">
-				<Input
-					type="select"
-					options={[
-						['1', 'Coincise answers'],
-						['2', 'Summarize'],
-						['3', 'Explain']
-					]}
-					bind:value={responseType}
-					size="small"
-					block
-					containerClass="flex-1"
-					label="Response type"
-					tabindex="3"
-				/>
-				<Tooltip message="Get text from a photo" position="left">
-					<input
-						type="file"
-						accept="image/*"
-						class="hidden"
-						bind:this={file}
-						on:change={handleFileChange}
+		<footer class="sticky bottom-0 bg-base-100 border-t border-base-300 px-2 pb-2 w-full">
+			<div class="w-full max-w-4xl mx-auto flex flex-col gap-2">
+				<div class="flex flex-row gap-2 items-end">
+					<Input
+						type="select"
+						options={[
+							['1', 'Coincise answers'],
+							['2', 'Summarize'],
+							['3', 'Explain']
+						]}
+						bind:value={responseType}
+						size="small"
+						block
+						containerClass="flex-1"
+						label="Response type"
+						tabindex="3"
+					/>
+					<Tooltip message="Get text from a photo" position="left">
+						<input
+							type="file"
+							accept="image/*"
+							class="hidden"
+							bind:this={file}
+							on:change={handleFileChange}
+						/>
+						<Button
+							on:click={() => file.click()}
+							type="button"
+							icon="photo_camera"
+							loading={convertingImage}
+							disabled={workerError || !tesseractWorker || convertingImage}
+							tabindex="4"
+							size="small"
+						/>
+					</Tooltip>
+				</div>
+				<div class="flex flex-row gap-2 items-end">
+					<Input
+						type="textarea"
+						id="chat-input"
+						rows="1"
+						block
+						containerClass="flex-1"
+						inputClass="resize-none max-h-64 leading-none"
+						placeholder="Ask here or paste a screenshot..."
+						autocomplete="off"
+						bind:input={textarea}
+						bind:value={message}
+						on:input={updateTextareaSize}
+						on:paste={handlePaste}
+						tabindex="1"
 					/>
 					<Button
-						on:click={() => file.click()}
+						endIcon="auto_fix_normal"
 						type="button"
-						icon="photo_camera"
-						loading={convertingImage}
-						disabled={workerError || !tesseractWorker || convertingImage}
-						tabindex="4"
-						size="small"
-					/>
-				</Tooltip>
+						on:click={send}
+						disabled={responseWaiting}
+						loading={responseWaiting}
+						tabindex="2"
+						primary>Send</Button
+					>
+				</div>
 			</div>
-			<div class="flex flex-row gap-2 items-end">
-				<Input
-					type="textarea"
-					id="chat-input"
-					rows="1"
-					block
-					containerClass="flex-1"
-					inputClass="resize-none max-h-64 leading-none"
-					placeholder="Ask here or paste a screenshot..."
-					autocomplete="off"
-					bind:input={textarea}
-					bind:value={message}
-					on:input={updateTextareaSize}
-					on:paste={handlePaste}
-					tabindex="1"
-				/>
-				<Button
-					endIcon="auto_fix_normal"
-					type="button"
-					on:click={send}
-					disabled={responseWaiting}
-					loading={responseWaiting}
-					tabindex="2">Send</Button
-				>
-			</div>
-		</div>
-	</footer>
+		</footer>
+	</main>
 </div>

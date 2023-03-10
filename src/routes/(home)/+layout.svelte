@@ -7,8 +7,8 @@
 	import '../../app.css';
 </script>
 
+<Header />
 <div class="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 flex-1">
-	<Header />
 	<main
 		class="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-28 mt-20 background-gradient"
 	>

@@ -24,3 +24,7 @@ body {
 	transform: scale(1);
 	pointer-events: none;
 }
+
+:root {
+	--rounded-btn: 0.75rem;
+}
