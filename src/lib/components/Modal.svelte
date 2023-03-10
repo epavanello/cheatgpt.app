@@ -20,10 +20,10 @@
 		on:keydown={close}
 	>
 		<div class="modal-box relative">
-			<Button on:click={close} class="absolute right-2 top-2" circle size="small">✕</Button>
+			<Button on:click={close} class="absolute right-1 top-1" circle size="small">✕</Button>
 
 			{#if $$slots.title}
-				<h3 class="font-bold text-xl">
+				<h3 class="font-bold text-xl py-2">
 					<slot name="title" />
 				</h3>
 			{/if}
