@@ -9,31 +9,26 @@
 	import { readAndCompressImage } from 'browser-image-resizer';
 	import Header from '$lib/components/Header.svelte';
 	import Modal from '$lib/components/Modal.svelte';
-	import Badge from '$lib/components/Badge.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Google from '$lib/svg/Google.svelte';
+	import type { PageData } from './$types';
+	import { handleError } from '$lib/db';
+	import { getErrorMessage } from '$lib/utilities';
+	export let data: PageData;
 
 	let message: string = '';
 	let responseWaiting = false;
 
 	let responseType: ResponseType = ResponseType.ConinciseAnswers;
 
-	let localMessages: Message[] = [
-		{
-			message: `Do you need help cheating on exams? 😜
-Look no further! 
-Just fire away with your questions and get lightning-fast, concise answers from yours truly. 
-And if you're feeling extra sneaky, snap a quick pic of that textbook page and let the AI work its magic to extract the text for you.
-
-Just don't blame me if you get caught! 😂`,
-			role: 'assistant'
-		}
-	];
+	let localMessages: Message[] = [];
 
 	let convertingImage = false;
 
 	let textarea: HTMLTextAreaElement;
 	let file: HTMLInputElement;
 	let openPremiumModal = false;
+	let loadingGoogle = false;
 
 	function updateTextareaSize() {
 		if (textarea) {
@@ -131,6 +126,7 @@ Just don't blame me if you get caught! 😂`,
 	}
 
 	onMount(async () => {
+		console.log(data.session);
 		try {
 			const worker = await Tesseract.createWorker({});
 			await worker.loadLanguage('eng');
@@ -141,6 +137,30 @@ Just don't blame me if you get caught! 😂`,
 			workerError = true;
 		}
 	});
+
+	async function loginWithGoogle() {
+		try {
+			loadingGoogle = true;
+			handleError(
+				await data.supabase.auth.signInWithOAuth({
+					provider: 'google',
+					options: {
+						redirectTo: location.href
+					}
+				})
+			);
+		} catch (error) {
+			addMessage({
+				role: 'assistant',
+				message: getErrorMessage(error)
+			});
+		} finally {
+			loadingGoogle = false;
+		}
+	}
+	async function logout() {
+		await data.supabase.auth.signOut();
+	}
 </script>
 
 <Modal bind:open={openPremiumModal}>
@@ -180,7 +200,8 @@ Just don't blame me if you get caught! 😂`,
 				<Icon name="done" class="text-green-500" /> Multi-language support <i>(future)</i>
 			</li>
 		</ul>
-		<Button animated link="https://buy.stripe.com/5kA28CeOy6mY3x64gg" class="mt-6">Subscribe</Button>
+		<Button animated link="https://buy.stripe.com/5kA28CeOy6mY3x64gg" class="mt-6">Subscribe</Button
+		>
 	</div>
 </Modal>
 
@@ -195,6 +216,46 @@ Just don't blame me if you get caught! 😂`,
 <div class="flex-1 w-full flex flex-col items-center justify-center">
 	<main class="w-full max-w-4xl h-full lg:h-3/4 mobile:w-full flex flex-col">
 		<section class="flex-1 w-full px-2 py-1">
+			<ChatBubble
+				role="assistant"
+				message={`
+Do you need help cheating on exams? 😜
+Look no further! 
+Just fire away with your questions and get lightning-fast, concise answers from yours truly. 
+And if you're feeling extra sneaky, snap a quick pic of that textbook page and let the AI work its magic to extract the text for you.
+
+Just don't blame me if you get caught! 😂`}
+			/>
+			<ChatBubble role="assistant">
+				{#if data.session?.user}
+					Welcome back {data.session.user.email}
+					<Button
+						type="button"
+						class="bg-base-100 my-2"
+						size="small"
+						normalCase
+						outline
+						on:click={logout}
+					>
+						Sign out
+					</Button>
+				{:else}
+					It seems that you are not logged in.<br />
+					<Button
+						type="button"
+						class="bg-base-100 my-2"
+						size="small"
+						normalCase
+						outline
+						on:click={loginWithGoogle}
+						loading={loadingGoogle}
+						disabled={loadingGoogle}
+					>
+						<Google />
+						Sign in with Google
+					</Button>
+				{/if}
+			</ChatBubble>
 			{#each localMessages as message}
 				<ChatBubble message={message.message} role={message.role} />
 			{/each}
